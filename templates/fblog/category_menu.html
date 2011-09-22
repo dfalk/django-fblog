@@ -1,0 +1,6 @@
+<ul><li><h2>Подразделы</h2>
+    <ul>
+        {% for category in category_menu %}<li><a href="{% url blog_category_detail category.slug %}">{{ category }}</a></li>
+        {% endfor %}
+    </ul>
+</li></ul>

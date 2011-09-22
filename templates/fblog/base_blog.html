@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load fblog_tags %}
+
+{% block title %}Blog title{% endblock %}
+
+{% block breadcrumbs %} - Дневник{% endblock %}
+
+{% block sidebar %}
+<ul><li><h2>Подписки</h2><ul><li><a href="{% url blog_rss %}">RSS канал</a></li></ul></li></ul>
+{% category_menu request %}
+{% archive_menu request %}
+{% endblock %}
+

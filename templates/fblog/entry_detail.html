@@ -1,0 +1,40 @@
+{% extends "fblog/base_blog.html" %}
+{% load comments inlines markup %}
+
+{% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{{ entry.category.get_absolute_url }}">{{ entry.category }}</a> / <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - Заметка{% endblock %}
+
+{% block content %}
+<h1>{{ entry.title }}</h1>
+
+<div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a></div>
+
+<div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
+
+<hr>
+<div class="entry-comments">
+<h2 id="comments">Комментарии:</h2>{% get_comment_list for entry as allcomments %}
+
+{% if allcomments|length = 0 %}
+0 комментариев. Напишите первый комментарий к этой заметке!
+{% endif %}
+                
+{% for comment in allcomments %}
+<p><b>{{ comment.user_name }}</b>, {{ comment.submit_date }}:
+<br>{{ comment.comment }}</p>
+{% endfor %}
+
+{% if entry.enable_comments %}<h3>Ваш комментарий:</h3>
+{% else %}<h3>Комментирование отключено.</h3>{% endif %}
+
+{% if entry.enable_comments and user.is_authenticated %}
+{% render_comment_form for entry %}
+{% endif %}
+
+{% if entry.enable_comments and not user.is_authenticated %}
+<p><a href="{% url auth_login %}?next={{ request.path }}">Чтобы оставить комментарий, необходимой войти на сайт</a>
+{% endif %}
+</div>
+{% endblock %}
+            

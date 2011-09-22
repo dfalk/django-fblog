@@ -1,0 +1,8 @@
+FBLOG - django app
+
+Fork of basic.blog on my own needs.
+
+Dependecies:
+- basic.inlines
+- registration
+- contrib: comments, auth, sites, sitemaps, markup, syndication, contenttypes

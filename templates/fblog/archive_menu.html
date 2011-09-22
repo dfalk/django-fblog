@@ -1,0 +1,6 @@
+<ul><li><h2>Архивы</h2>
+    <ul>
+        {% for month in blog_month_list %}<li><a href="{% url blog_archive_month month.year month|date:"m" %}">{{ month.year }}, {{ month|date:"F" }}</a></li>
+        {% endfor %}
+    </ul>
+</li></ul>

@@ -1,0 +1,5 @@
+{% extends "fblog/entry_list.html" %}
+
+{% block title %}Архив раздела {{ category }} | {{ block.super }}{% endblock %}
+
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - {{ category }}{% endblock %}

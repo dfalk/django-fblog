@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+<head>
+
+<title>{% block title %}Site title{% endblock %}</title>
+
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<meta name="description" content="{% block description %}{% endblock %}"/>
+<meta name="keywords" content="{% block keywords %}{% endblock %}" />
+
+{% block extrahead %}{% endblock %}
+
+</head>
+
+<body>
+
+<div id="header">
+{% block header %}{% endblock %}
+</div><!-- /#header -->
+
+<div id="main">
+{% block main %}
+
+<div id="content" class="{% block contentclass %}{% endblock %}">
+{% block content %}{% endblock %}
+</div><!-- /#content -->
+
+<div id="sidebar">
+{% block sidebar %}{% endblock %}
+</div><!-- /#sidebar -->
+
+{% endblock %}
+</div><!-- /#main -->
+
+<div id="footer" class="infobar">
+{% block footer %}{% endblock %}
+</div><!-- /#infobar footer -->
+
+</body>
+</html>
