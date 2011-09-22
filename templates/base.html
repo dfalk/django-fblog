@@ -23,6 +23,7 @@
 <div id="personal" class="infobar" >
     <div id="breadcrumbs"><a href="/">PerunSpace.Ru</a>{% block breadcrumbs %}{% endblock %}</div>
     <div id="profile">
+        <a href="{% url blog_index %}">Блог</a>
         {% if not user.is_authenticated %}<a href="{% url auth_login %}?next=/">Войти</a>{% endif %}
         {% if user.is_staff %}<a href="{% url admin:index %}">Админка</a>{% endif %}
         {% if user.is_authenticated %}<a href="{% url auth_logout %}?next=/">Выйти</a> ({{ user.username }}){% endif %}
