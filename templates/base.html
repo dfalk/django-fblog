@@ -7,6 +7,8 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" />
+
 <meta name="description" content="{% block description %}{% endblock %}"/>
 <meta name="keywords" content="{% block keywords %}{% endblock %}" />
 
@@ -17,7 +19,7 @@
 <body>
 
 <div id="header">
-{% block header %}{% endblock %}
+{% block header %}Site title{% endblock %}
 </div><!-- /#header -->
 
 <div id="personal" class="infobar" >
@@ -43,10 +45,11 @@
 </div><!-- /#sidebar -->
 
 {% endblock %}
+<div class="clearfix"></div>
 </div><!-- /#main -->
 
 <div id="footer" class="infobar">
-{% block footer %}{% endblock %}
+{% block footer %}Site copyright{% endblock %}
 </div><!-- /#infobar footer -->
 
 </body>

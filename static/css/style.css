@@ -1,0 +1,95 @@
+body {
+    font-family: Ubuntu, Verdana, sans-serif;
+    font-size: 11px;
+    background: #ccc;
+    color: #555;
+    margin: 0px auto;
+    width: 960px;
+}
+
+#header {
+    font-size: 300%;
+    margin: 10px auto 5px;
+}
+
+#personal {
+    background: #bbb;
+    margin: 4px 0;
+    padding: 3px;
+}
+
+#breadcrumbs {
+    float: left;
+}
+
+#profile {
+    float: right;
+}
+
+.clearfix {
+    clear: both;
+}
+
+#main {
+    background: #ccc;
+}
+
+#content {
+    padding: 10px;
+    background: #ddd;
+    width: 704px;
+    float: left;
+}
+
+#sidebar {
+    width: 204px;
+    padding: 10px;
+    background: #ddd;
+    margin-left: 10px;
+    float: right;
+}
+
+#footer {
+    clear: both;
+    background: #bbb;
+    margin: 3px 0;
+    padding: 3px;
+}
+
+a, a:active, a:visited {
+    color: #a52919;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000000;
+    text-decoration: underline;
+}
+
+h1 {
+    margin: 2px 0;
+    font-size: 150%;
+    margin: 4px auto 4px;
+}
+h2 {
+    margin: 3px 0;
+    font-size: 125%;
+    color: #773333;
+}
+h3 {
+    margin: 2px 0;
+    font-size: 110%;
+    color: #555555;
+}
+
+.blog ul, #sidebar ul {
+    list-style-type: none;
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.blog ul li {
+    margin: 0px;
+    margin-bottom: 10px;
+}
