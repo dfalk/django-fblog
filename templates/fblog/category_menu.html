@@ -1,6 +1,4 @@
-<ul><li><h3>Разделы</h3>
-    <ul>
-        {% for category in category_menu %}<li><a href="{% url blog_category_detail category.slug %}">{{ category }}</a></li>
-        {% endfor %}
-    </ul>
-</li></ul>
+<ul>
+    {% for category in category_menu %}<li><a href="{% url blog_category_detail category.slug %}">{{ category }}</a></li>
+    {% endfor %}
+</ul>

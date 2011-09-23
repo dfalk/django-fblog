@@ -19,6 +19,14 @@ def archive_menu():
     blog_month_list = Entry.objects.dates('publish','month',order='DESC')
     return {'blog_month_list': blog_month_list}
 
+@register.inclusion_tag('fblog/latest_menu.html')
+def latest_menu(num=5,featured=""):
+    if featured == "featured":
+        entry_list = Entry.objects.published().filter(is_featured=True)[:num]
+    else:
+        entry_list = Entry.objects.published()[:num]
+    return {'entry_list': entry_list}
+
 
 class LatestContentNode(Node):
     def __init__(self, model, num, varname):

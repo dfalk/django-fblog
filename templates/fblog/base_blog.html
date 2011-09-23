@@ -8,33 +8,37 @@
 
 {% block sidebar %}
 <!--<h2>Меню блога</h2>-->
-{% if user.is_staff %}<ul><li><h3>Администрирование</h3>
+
+<ul>
+
+{% if user.is_staff %}<li><h3>Администрирование</h3>
 <ul>
 <li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
 <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
 </ul>
-</li></ul>{% endif %}
+</li>{% endif %}
 
-<ul><li><h3>Последнее</h3>{% get_latest fblog.entry 5 as entry_list %}
-<ul>
-{% for entry in entry_list %}
-<li><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
-{% endfor %}
-</ul>
-</li></ul>
+<li><h3>Подписки</h3>
+<ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
+</li>
 
-<ul><li><h3>Интересное</h3>{% get_latest_featured fblog.entry 5 as entry_list %}
-<ul>
-{% for entry in entry_list %}
-<li><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
-{% endfor %}
-</ul>
-</li></ul>
-
-<ul><li><h3>Подписки</h3><ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul></li></ul>
-
+<li><h3>Разделы</h3>
 {% category_menu %}
+</li>
 
+<li><h3>Последнее</h3>
+{% latest_menu %}
+</li>
+
+<li><h3>Интересное</h3>
+{% latest_menu 2 "featured" %}
+</li>
+
+<li><h3>Архивы</h3>
 {% archive_menu %}
+</li>
+
+</ul>
+
 {% endblock %}
 
