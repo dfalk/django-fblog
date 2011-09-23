@@ -6,6 +6,8 @@
 {% block contentclass %}blog{% endblock %}
 
 {% block content %}
+<!--<h1>Дневник</h1>-->
+
 <ul class="blog-entries">
 {% for entry in object_list %}
 <li>
@@ -23,7 +25,6 @@
 </ul>
 
 {% if is_paginated %}
-<hr>
 <div class="pagination">Страницы:
 {% if has_previous %}<a class="page-previous" href="?page={{ previous }}">позже</a>{% endif %}
 <span class="page-position">{{ page }}/{{ pages }}</span>

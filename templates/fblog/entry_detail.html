@@ -5,6 +5,7 @@
 
 {% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{{ entry.category.get_absolute_url }}">{{ entry.category }}</a> / <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - Заметка{% endblock %}
 
+{% block contentclass %}blog-entry{% endblock %}
 {% block content %}
 <h1>{{ entry.title }}</h1>
 
@@ -12,29 +13,31 @@
 
 <div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
 
-<hr>
 <div class="entry-comments">
-<h2 id="comments">Комментарии:</h2>{% get_comment_list for entry as allcomments %}
+<h2>Комментарии</h2>{% get_comment_list for entry as allcomments %}
 
-{% if allcomments|length = 0 %}
-0 комментариев. Напишите первый комментарий к этой заметке!
-{% endif %}
-                
+{% if allcomments|length = 0 %}<div id="comments-first">Напишите первый комментарий к этой заметке!</div>{% else %}
+<div class="comments-list">  
 {% for comment in allcomments %}
 <p><b>{{ comment.user_name }}</b>, {{ comment.submit_date }}:
 <br>{{ comment.comment }}</p>
 {% endfor %}
+</div>
+{% endif %}
 
+<div class="comment-form">
 {% if entry.enable_comments %}<h3>Ваш комментарий:</h3>
 {% else %}<h3>Комментирование отключено.</h3>{% endif %}
 
 {% if entry.enable_comments and user.is_authenticated %}
 {% render_comment_form for entry %}
 {% endif %}
+</div>
 
 {% if entry.enable_comments and not user.is_authenticated %}
-<p><a href="{% url auth_login %}?next={{ request.path }}">Чтобы оставить комментарий, необходимой войти на сайт</a>
+<div class="comment-login"><a href="{% url auth_login %}?next={{ request.path }}">Необходимо представиться.</a></div>
 {% endif %}
+
 </div>
 {% endblock %}
             

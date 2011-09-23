@@ -7,7 +7,8 @@
 {% block breadcrumbs %} - Дневник{% endblock %}
 
 {% block sidebar %}
-<ul><li><h3>Подписки</h3><ul><li><a href="{% url blog_rss %}">RSS канал</a></li></ul></li></ul>
+<!--<h2>Меню блога</h2>-->
+<ul><li><h3>Подписки</h3><ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul></li></ul>
 {% category_menu request %}
 {% archive_menu request %}
 {% endblock %}

@@ -7,6 +7,10 @@ body {
     width: 960px;
 }
 
+.clearfix {
+    clear: both;
+}
+
 #header {
     font-size: 300%;
     margin: 10px auto 5px;
@@ -26,27 +30,23 @@ body {
     float: right;
 }
 
-.clearfix {
-    clear: both;
-}
-
 #main {
     background: #ccc;
 }
 
 #content {
-    padding: 10px;
     background: #ddd;
     width: 704px;
     float: left;
+    padding: 10px;
 }
 
 #sidebar {
-    width: 204px;
-    padding: 10px;
     background: #ddd;
-    margin-left: 10px;
+    width: 212px;
     float: right;
+    margin-left: 4px;
+    padding: 10px;
 }
 
 #footer {
@@ -67,19 +67,26 @@ a:hover {
 }
 
 h1 {
-    margin: 2px 0;
-    font-size: 150%;
-    margin: 4px auto 4px;
+    font-size: 175%;
+    color: #773333;
+    margin: 2px 0 10px 0;
+    padding: 0;
 }
 h2 {
-    margin: 3px 0;
-    font-size: 125%;
+    font-size: 150%;
     color: #773333;
+    margin: 3px 0;
+    padding: 0;
 }
 h3 {
-    margin: 2px 0;
-    font-size: 110%;
+    font-size: 125%;
     color: #555555;
+    margin: 2px 0;
+    padding: 0;
+}
+
+#sidebar h2 {
+    margin-bottom: 10px;
 }
 
 .blog ul, #sidebar ul {
@@ -92,4 +99,12 @@ h3 {
 .blog ul li {
     margin: 0px;
     margin-bottom: 10px;
+}
+
+.entry-preview {
+    margin-bottom: -8px;
+}
+
+.entry-content, .comment-form {
+    margin-top: 10px;
 }
