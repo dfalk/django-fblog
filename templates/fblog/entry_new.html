@@ -7,7 +7,7 @@
 
 {% block contentclass %}blog-entry{% endblock %}
 {% block content %}
-<h1>{{ entry.title }}</h1>
+<h1>Новая заметка</h1>
 
 <form action="" method="post">{% csrf_token %}
 {{ form.as_p }}
