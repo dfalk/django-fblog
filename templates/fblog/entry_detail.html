@@ -9,7 +9,7 @@
 {% block content %}
 <h1>{{ entry.title }}</h1>
 
-<div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a></div>
+<div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">изменить</a>{% if not entry.is_published %} | <a href="{{ entry.get_absolute_url }}publish/">опубликовать</a>{% endif %}{% endif %}</div>
 
 <div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
 

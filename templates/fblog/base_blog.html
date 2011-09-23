@@ -8,6 +8,12 @@
 
 {% block sidebar %}
 <!--<h2>Меню блога</h2>-->
+{% if user.is_staff %}<ul><li><h3>Администрирование</h3>
+<ul>
+<li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
+<li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
+</ul>
+</li></ul>{% endif %}
 <ul><li><h3>Подписки</h3><ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul></li></ul>
 {% category_menu request %}
 {% archive_menu request %}

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from models import Entry, EntryCategory
 from django.contrib import admin
+from fblog.models import Entry, EntryCategory
+from fblog.forms import EntryAdminForm
 
 class EntryAdmin(admin.ModelAdmin):
     exclude = ["author"]
@@ -11,6 +12,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_display = ["title", "publish", "is_published"]
     list_editable = ["is_published"]
     actions = ["make_published"]
+    form = EntryAdminForm
 
     def save_model(self, request, obj, form, change):
         if not change:
