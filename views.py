@@ -43,32 +43,28 @@ def entry_publishing(request, page=0, template_name='fblog/entry_publishing.html
 
 @permission_required('fblog.add_entry')
 def entry_new(request, **kwargs):
-    if request.method == 'POST': # If the form has been submitted...
-        form = EntryAdminForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
+    if request.method == 'POST':
+        form = EntryAdminForm(request.POST)
+        if form.is_valid():
             new_entry = form.save(commit=False)
             new_entry.author = request.user
             new_entry.save()
-            return HttpResponseRedirect(reverse('blog_index')) # Redirect after POST
+            return HttpResponseRedirect(reverse('blog_index'))
     else:
-        form = EntryAdminForm() # An unbound form
+        form = EntryAdminForm()
 
     return direct_to_template(request, 'fblog/entry_new.html',{'form':form})
 
 @permission_required('fblog.change_entry')
 def entry_edit(request, year, month, day, slug, **kwargs):
     entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
-    if request.method == 'POST': # If the form has been submitted...
-        form = EntryAdminForm(request.POST, instance=entry) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            # ...
+    if request.method == 'POST':
+        form = EntryAdminForm(request.POST, instance=entry)
+        if form.is_valid():
             form.save()
-            return HttpResponseRedirect(entry.get_absolute_url()) # Redirect after POST
+            return HttpResponseRedirect(entry.get_absolute_url())
     else:
-        form = EntryAdminForm(instance=entry) # An unbound form
+        form = EntryAdminForm(instance=entry)
 
     return direct_to_template(request, 'fblog/entry_edit.html',{'form':form,'entry':entry})
 
