@@ -6,7 +6,6 @@ from fblog.models import Entry, EntryCategory
 from fblog.forms import EntryAdminForm
 
 class EntryAdmin(admin.ModelAdmin):
-    exclude = ["author"]
     date_hierarchy = "publish"
     list_per_page = 20
     list_display = ["title", "publish", "is_published"]

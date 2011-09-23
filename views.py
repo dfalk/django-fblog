@@ -48,7 +48,9 @@ def entry_new(request, **kwargs):
         if form.is_valid(): # All validation rules pass
             # Process the data in form.cleaned_data
             # ...
-            form.save()
+            new_entry = form.save(commit=False)
+            new_entry.author = request.user
+            new_entry.save()
             return HttpResponseRedirect(reverse('blog_index')) # Redirect after POST
     else:
         form = EntryAdminForm() # An unbound form
