@@ -5,7 +5,7 @@ import datetime, time
 from django.views.generic import date_based, list_detail
 from django.views.generic.simple import direct_to_template
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required
 from django.utils import simplejson
 from fblog.models import Entry, EntryCategory
