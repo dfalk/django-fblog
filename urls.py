@@ -8,7 +8,6 @@ urlpatterns = patterns('fblog.views',
     url(r'^$', view='entry_list', name='blog_index'),
     url(r'^rss/$', view=BlogFeed(), name='blog_rss'),
     url(r'^new/$', view='entry_new', name='blog_entry_new'),
-    url(r'^publishing/$', view='entry_publishing', name='blog_publishing'),
     url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/$',
         view='entry_detail',
         name='blog_entry_detail'
@@ -17,10 +16,17 @@ urlpatterns = patterns('fblog.views',
         view='entry_edit',
         name='blog_entry_edit'
     ),
+
+    url(r'^publishing/$', view='entry_publishing', name='blog_publishing'),
     url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/publish/$',
         view='entry_publish',
         name='blog_entry_publish'
     ),
+    url(r'^(?P<year>\d{4})/(?P<month>\d{2})/(?P<day>\d{2})/(?P<slug>[-\w]+)/hide/$',
+        view='entry_hide',
+        name='blog_entry_hide'
+    ),
+
     url(r'^category/(?P<slug>[-\w]+)/$',
         view='category_detail',
         name='blog_category_detail'

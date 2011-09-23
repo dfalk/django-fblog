@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.views.generic.simple import direct_to_template, redirect_to
-from django.shortcuts import redirect
+import datetime, time
+from django.views.generic import date_based, list_detail
+from django.views.generic.simple import direct_to_template
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.views.generic import date_based, list_detail
+from django.contrib.auth.decorators import permission_required
+from django.utils import simplejson
 from fblog.models import Entry, EntryCategory
 from fblog.forms import EntryAdminForm
-from django.contrib.auth.decorators import permission_required
-import datetime, time
 
 def entry_list(request, page=0, template_name='fblog/entry_list.html', **kwargs):
     return list_detail.object_list(
@@ -28,6 +28,13 @@ def entry_detail(request, year, month, day, slug, **kwargs):
 def entry_publish(request, year, month, day, slug, **kwargs):
     entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
     entry.is_published = True
+    entry.save()
+    return HttpResponseRedirect(reverse('blog_index'))
+
+@permission_required('fblog.change_entry')
+def entry_hide(request, year, month, day, slug, **kwargs):
+    entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
+    entry.is_published = False
     entry.save()
     return HttpResponseRedirect(reverse('blog_publishing'))
 
