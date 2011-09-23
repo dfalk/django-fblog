@@ -1,0 +1,24 @@
+{% load comments i18n %}
+<form action="{% comment_form_target %}" method="post">{% csrf_token %}
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+  {% for field in form %}
+    {% if field.is_hidden %}
+      {{ field }}
+    {% else %}
+      {% if field.errors %}{{ field.errors }}{% endif %}
+      <p
+        {% if field.errors %} class="error"{% endif %}
+        {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "name" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "email" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "url" %} style="display:none;"{% endifequal %}
+        {% ifequal field.name "title" %} style="display:none;"{% endifequal %}>
+        {{ field }} {#{ field.label_tag }#}
+      </p>
+    {% endif %}
+  {% endfor %}
+  <p class="submit">
+    <input type="submit" name="post" class="submit-post" value="Отправить" />
+    <!--<input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />-->
+  </p>
+</form>
