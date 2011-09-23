@@ -1,0 +1,4 @@
+<ul>
+    {% for entry in entry_list %}<li><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
+    {% endfor %}
+</ul>
