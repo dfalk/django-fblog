@@ -14,8 +14,27 @@
 <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
 </ul>
 </li></ul>{% endif %}
+
+<ul><li><h3>Последнее</h3>{% get_latest fblog.entry 5 as entry_list %}
+<ul>
+{% for entry in entry_list %}
+<li><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
+{% endfor %}
+</ul>
+</li></ul>
+
+<ul><li><h3>Интересное</h3>{% get_latest_featured fblog.entry 5 as entry_list %}
+<ul>
+{% for entry in entry_list %}
+<li><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
+{% endfor %}
+</ul>
+</li></ul>
+
 <ul><li><h3>Подписки</h3><ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul></li></ul>
-{% category_menu request %}
-{% archive_menu request %}
+
+{% category_menu %}
+
+{% archive_menu %}
 {% endblock %}
 

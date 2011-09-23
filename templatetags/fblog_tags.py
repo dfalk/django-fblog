@@ -1,13 +1,60 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from django.db.models import get_model
+from django.template import Library, Node
+from django.template import TemplateSyntaxError
+from django.contrib.sites.models import Site
 from fblog.models import Entry, EntryCategory
-from django import template
-register = template.Library()
+
+register = Library()
 
 @register.inclusion_tag('fblog/category_menu.html')
-def category_menu(request):
+def category_menu():
     category_menu = EntryCategory.objects.all()
-    return {'category_menu': category_menu, 'request': request}
+    return {'category_menu': category_menu}
 
 @register.inclusion_tag('fblog/archive_menu.html')
-def archive_menu(request):
+def archive_menu():
     blog_month_list = Entry.objects.dates('publish','month',order='DESC')
     return {'blog_month_list': blog_month_list}
+
+
+class LatestContentNode(Node):
+    def __init__(self, model, num, varname):
+        self.num, self.varname = num, varname
+        self.model = get_model(*model.split('.'))
+        
+    def render(self, context):
+        site = Site.objects.get_current()
+        context[self.varname] = self.model._default_manager.published()[:self.num]
+        return ''
+
+def get_latest(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 5:
+        raise TemplateSyntaxError, "get_latest tag takes exactly four arguments"
+    if bits[3] != 'as':
+        raise TemplateSyntaxError, "third argument to get_latest tag must be 'as'"
+    return LatestContentNode(bits[1], bits[2], bits[4])
+get_latest = register.tag(get_latest)
+
+
+class LatestFeaturedContentNode(Node):
+    def __init__(self, model, num, varname):
+        self.num, self.varname = num, varname
+        self.model = get_model(*model.split('.'))
+        
+    def render(self, context):
+        site = Site.objects.get_current()
+        context[self.varname] = self.model._default_manager.published().filter(is_featured=True)[:self.num]
+        return ''
+
+def get_latest_featured(parser, token):
+    bits = token.contents.split()
+    if len(bits) != 5:
+        raise TemplateSyntaxError, "get_latest tag takes exactly four arguments"
+    if bits[3] != 'as':
+        raise TemplateSyntaxError, "third argument to get_latest_featured tag must be 'as'"
+    return LatestFeaturedContentNode(bits[1], bits[2], bits[4])
+get_latest_featured = register.tag(get_latest_featured)
