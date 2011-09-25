@@ -10,3 +10,10 @@ class EntryAdminForm(forms.ModelForm):
     class Meta:
         model = Entry
         exclude = ('author',)
+
+    def __init__(self, *args, **kwargs):
+        super(EntryAdminForm, self).__init__(*args, **kwargs)
+        self.fields['content'].widget.attrs['cols'] = 80
+        self.fields['content'].widget.attrs['rows'] = 20
+        self.fields['preview'].widget.attrs['cols'] = 80
+
