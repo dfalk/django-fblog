@@ -85,6 +85,10 @@ h3 {
     padding: 0;
 }
 
+#id_comment {
+    width: 600px;
+}
+
 #sidebar h2 {
     margin-bottom: 10px;
 }

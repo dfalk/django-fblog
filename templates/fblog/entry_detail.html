@@ -30,6 +30,11 @@ $(document).ready(function(){
         );
         return false;
     });
+    $('input[name=anonym]').click(function(){
+        $('#p_name').toggle();
+        $('#p_email').toggle();
+        $('#p_url').toggle();
+    });
 });
 </script>
 {% endblock %}
@@ -45,7 +50,7 @@ $(document).ready(function(){
 <div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
 
 <div class="entry-comments">
-<h2>Комментарии</h2>{% get_comment_list for entry as allcomments %}
+<h2 id="comments">Комментарии</h2>{% get_comment_list for entry as allcomments %}
 
 {% if allcomments|length = 0 %}<div class="comments-first">Напишите первый комментарий к этой заметке!</div>{% else %}
 <div class="comments-list">  
@@ -57,8 +62,27 @@ $(document).ready(function(){
 {% endif %}
 
 <div class="comment-form">
-{% if entry.enable_comments %}<h3>Ваш комментарий:</h3>
-{% if user.is_authenticated %}{% render_comment_form for entry %}
+{% if entry.enable_comments %}<h3>Ваш комментарий, {{ request.user }}:</h3>
+{% if user.is_authenticated %}
+    {% get_comment_form for entry as form %}
+    <form action="{% comment_form_target %}" method="post">
+    {% csrf_token %}
+    <input type="checkbox" value="" name="anonym" />анонимно
+    <input type="hidden" name="next" value="{{ entry.get_absolute_url }}" />
+    {% for field in form %}
+        {% if field.is_hidden %}<div>{{ field }}</div>
+        {% else %}
+            {% if field.errors %}{{ field.errors }}{% endif %}
+            <p{% if field.errors %} class="error"{% endif %}{% if field.name == "honeypot" %} style="display:none;"{% endif %}{% if field.name == "url" or field.name == "name" or field.name == "email" %} style="display:none;" id="p_{{ field.name }}"{% endif %}>
+            {{ field }} {% if field.name != "comment" %}{{ field.label_tag }}{% endif %}
+            </p>
+        {% endif %}
+    {% endfor %}
+    <p class="submit">
+    <input type="submit" name="post" class="submit-post" value="Отправить" />
+    <!--<input type="submit" name="preview" class="submit-preview" value="Preview" />-->
+    </p>
+    </form>
 {% else %}<a href="{% url auth_login %}?next={{ request.path }}">Необходимо представиться.</a>
 {% endif %}
 {% else %}<span class="comments-disabled">Комментирование отключено.</span>{% endif %}
