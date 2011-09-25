@@ -10,8 +10,8 @@
 $(document).ready(function(){
     $('#publish').click(function(){
         $.get(
-            '{{ entry.get_absolute_url }}publish',
-            '',
+            '{{ entry.get_absolute_url }}publish/',
+            {},
             function(data){
                 $('#publish').hide();
                 $('#hide').show();
@@ -21,8 +21,8 @@ $(document).ready(function(){
     });
     $('#hide').click(function(){
         $.get(
-            '{{ entry.get_absolute_url }}hide',
-            '',
+            '{{ entry.get_absolute_url }}hide/',
+            {},
             function(data){
                 $('#hide').hide();
                 $('#publish').show();
