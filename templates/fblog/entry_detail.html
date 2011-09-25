@@ -47,28 +47,23 @@ $(document).ready(function(){
 <div class="entry-comments">
 <h2>Комментарии</h2>{% get_comment_list for entry as allcomments %}
 
-{% if allcomments|length = 0 %}<div id="comments-first">Напишите первый комментарий к этой заметке!</div>{% else %}
+{% if allcomments|length = 0 %}<div class="comments-first">Напишите первый комментарий к этой заметке!</div>{% else %}
 <div class="comments-list">  
 {% for comment in allcomments %}
-<p><b>{{ comment.user_name }}</b>, {{ comment.submit_date }}:
-<br>{{ comment.comment }}</p>
+    <p><b>{{ comment.user_name }}</b>, {{ comment.submit_date }}:
+    <br>{{ comment.comment }}</p>
 {% endfor %}
 </div>
 {% endif %}
 
 <div class="comment-form">
 {% if entry.enable_comments %}<h3>Ваш комментарий:</h3>
-{% else %}<h3>Комментирование отключено.</h3>{% endif %}
-
-{% if entry.enable_comments and user.is_authenticated %}
-{% render_comment_form for entry %}
+{% if user.is_authenticated %}{% render_comment_form for entry %}
+{% else %}<a href="{% url auth_login %}?next={{ request.path }}">Необходимо представиться.</a>
 {% endif %}
+{% else %}<span class="comments-disabled">Комментирование отключено.</span>{% endif %}
 </div>
 
-{% if entry.enable_comments and not user.is_authenticated %}
-<div class="comment-login"><a href="{% url auth_login %}?next={{ request.path }}">Необходимо представиться.</a></div>
-{% endif %}
-
-</div>
+</div><!-- entry-comments -->
 {% endblock %}
             
