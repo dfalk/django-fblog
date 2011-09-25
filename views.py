@@ -29,14 +29,22 @@ def entry_publish(request, year, month, day, slug, **kwargs):
     entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
     entry.is_published = True
     entry.save()
-    return HttpResponseRedirect(reverse('blog_index'))
+    if request.is_ajax():
+        data = "public"
+        return HttpResponse(data)
+    else:
+        return HttpResponseRedirect(entry.get_absolute_url())
 
 @permission_required('fblog.change_entry')
 def entry_hide(request, year, month, day, slug, **kwargs):
     entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
     entry.is_published = False
     entry.save()
-    return HttpResponseRedirect(reverse('blog_publishing'))
+    if request.is_ajax():
+        data = "hidden"
+        return HttpResponse(data)
+    else:
+        return HttpResponseRedirect(entry.get_absolute_url())
 
 @permission_required('fblog.change_entry')
 def entry_publishing(request, page=0, template_name='fblog/entry_publishing.html', **kwargs):
