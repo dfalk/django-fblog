@@ -9,22 +9,26 @@
 <script type="text/javascript">
 $(document).ready(function(){
     $('#publish').click(function(){
+        $('#publish').hide();
+        $('<span class="process">запрос...</span>').insertAfter('#publish');
         $.get(
             '{{ entry.get_absolute_url }}publish/',
             {},
             function(data){
-                $('#publish').hide();
+                $('.process').remove();
                 $('#hide').show();
             }
         );
         return false;
     });
     $('#hide').click(function(){
+        $('#hide').hide();
+        $('<span class="process">запрос...</span>').insertAfter('#hide');
         $.get(
             '{{ entry.get_absolute_url }}hide/',
             {},
             function(data){
-                $('#hide').hide();
+                $('.process').remove();
                 $('#publish').show();
             }
         );
