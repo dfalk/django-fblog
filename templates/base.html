@@ -22,7 +22,7 @@
 {% block header %}Site title{% endblock %}
 </div><!-- /#header -->
 
-<div id="personal" class="infobar" >
+<div id="personal" class="infobar rounded" >
     <div id="profile">
         <a href="{% url blog_index %}">Блог</a>
         {% if not user.is_authenticated %}<a href="{% url auth_login %}?next={{ request.path }}">Войти</a>{% endif %}
@@ -36,11 +36,11 @@
 <div id="main">
 {% block main %}
 
-<div id="content" class="{% block contentclass %}{% endblock %}">
+<div id="content" class="{% block contentclass %}{% endblock %} rounded">
 {% block content %}{% endblock %}
 </div><!-- /#content -->
 
-<div id="sidebar">
+<div id="sidebar" class="rounded">
 {% block sidebar %}{% endblock %}
 </div><!-- /#sidebar -->
 
@@ -48,7 +48,7 @@
 <div class="clearfix"></div>
 </div><!-- /#main -->
 
-<div id="footer" class="infobar">
+<div id="footer" class="infobar rounded">
 {% block footer %}Site copyright{% endblock %}
 </div><!-- /#infobar footer -->
 

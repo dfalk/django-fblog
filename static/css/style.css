@@ -11,6 +11,12 @@ body {
     clear: both;
 }
 
+.rounded {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+
 #header {
     font-size: 300%;
     margin: 10px auto 5px;
