@@ -30,6 +30,7 @@ class Entry(models.Model):
     content = models.TextField()
     preview = models.TextField(blank=True)
 
+    related_entries = models.ManyToManyField('self', blank=True, null=True)
     is_published = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)

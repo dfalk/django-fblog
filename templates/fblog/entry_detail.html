@@ -53,6 +53,16 @@ $(document).ready(function(){
 
 <div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
 
+<div class="related-entries">
+<h2 id="related">Заметки по теме</h2>
+
+<ul>
+{% for item in entry.related_entries.all %}
+    <li><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
+{% endfor %}
+</ul>
+</div><!-- /related-entries -->
+
 <div class="entry-comments">
 <h2 id="comments">Комментарии</h2>{% get_comment_list for entry as allcomments %}
 

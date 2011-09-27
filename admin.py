@@ -10,6 +10,7 @@ class EntryAdmin(admin.ModelAdmin):
     list_per_page = 20
     list_display = ["title", "publish", "is_published"]
     list_editable = ["is_published"]
+    filter_horizontal = ["related_entries"]
     actions = ["make_published"]
     form = EntryAdminForm
 
