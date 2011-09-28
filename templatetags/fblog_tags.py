@@ -14,10 +14,15 @@ def category_menu():
     category_menu = EntryCategory.objects.all()
     return {'category_menu': category_menu}
 
-@register.inclusion_tag('fblog/archive_menu.html')
-def archive_menu():
+@register.inclusion_tag('fblog/archive_monthes.html')
+def archive_monthes():
     blog_month_list = Entry.objects.dates('publish','month',order='DESC')
     return {'blog_month_list': blog_month_list}
+
+@register.inclusion_tag('fblog/archive_tree.html')
+def archive_tree():
+    entry_list = Entry.objects.published()
+    return {'entry_list': entry_list}
 
 @register.inclusion_tag('fblog/latest_menu.html')
 def latest_menu(num=5,featured=""):

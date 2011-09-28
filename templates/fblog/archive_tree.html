@@ -1,0 +1,16 @@
+<ul>{% regroup entry_list by publish|date:"Y" as years_list %}
+    {% for year in years_list %}
+    <li><h4><a class="year" href="{% url blog_archive_year year.grouper %}">{{ year.grouper }}</a> ({{ year.list|length }})</h4>
+        <ul>{% regroup year.list by publish|date:"m" as item_list %}
+        {% for item in item_list %}
+        <li><h5><a class="month" href="{% url blog_archive_month year.grouper item.grouper %}">{{ item.grouper }}</a> ({{ item.list|length }})</h5><ul>
+              {% for entry in item.list %}
+              <li><a class="entry" href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
+              {% endfor %}
+        </ul></li>
+        {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+

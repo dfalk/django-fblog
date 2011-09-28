@@ -3,9 +3,10 @@
 
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
 
-{% block extrahead %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{{ entry.category.get_absolute_url }}">{{ entry.category }}</a> / <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - Заметка{% endblock %}
 
+{% block contentclass %}blog-entry{% endblock %}
+{% block content %}
 <script type="text/javascript">
 $(document).ready(function(){
     $('#publish').click(function(){
@@ -41,12 +42,7 @@ $(document).ready(function(){
     });
 });
 </script>
-{% endblock %}
 
-{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{{ entry.category.get_absolute_url }}">{{ entry.category }}</a> / <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - Заметка{% endblock %}
-
-{% block contentclass %}blog-entry{% endblock %}
-{% block content %}
 <h1>{{ entry.title }}</h1>
 
 <div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>

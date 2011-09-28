@@ -4,12 +4,16 @@
 
 {% block title %}Blog title{% endblock %}
 
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+{% endblock %}
+
 {% block breadcrumbs %} - Дневник{% endblock %}
 
 {% block sidebar %}
 <!--<h2>Меню блога</h2>-->
 
-<ul>
+<ul id="blog-sidemenu">
 
 {% if user.is_staff %}<li><h3>Администрирование</h3>
 <ul>
@@ -30,8 +34,8 @@
 {% latest_menu 5 "featured" %}
 </li>
 
-<li><h3>Архивы</h3>
-{% archive_menu %}
+<li id="blog-archive"><h3>Архив</h3>
+{% archive_tree %}
 </li>
 
 </ul>
