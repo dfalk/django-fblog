@@ -26,9 +26,10 @@ def archive_monthes():
     return {'blog_month_list': blog_month_list}
 
 @register.inclusion_tag('fblog/archive_tree.html')
-def archive_tree():
+def archive_tree(current_entry=None):
     entry_list = Entry.objects.published()
-    return {'entry_list': entry_list}
+    current_entry = current_entry
+    return {'entry_list': entry_list, 'current_entry': current_entry}
 
 @register.inclusion_tag('fblog/latest_menu.html')
 def latest_menu(num=5,featured=""):

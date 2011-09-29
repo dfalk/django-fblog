@@ -15,32 +15,29 @@
 <!--<h2>Меню блога</h2>-->
 <ul id="blog-sidemenu">
 
-    {% if user.is_staff %}<li>
-        <h3>Администрирование</h3>
+    <li><h3>Подписка</h3>
+        <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
+    </li>
+
+    <li><h3>Интересное</h3>
+{% latest_menu 5 "featured" %}
+    </li>
+
+    <li id="blog-archive"><h3>Архив</h3>
+{% if entry %}{% archive_tree entry %}{% else %}{% archive_tree %}{% endif %}
+    </li>
+
+    <li><h3>Разделы</h3>
+{% category_menu %}
+    </li>
+
+    {% if user.is_staff %}<li><h3>Администрирование</h3>
         <ul>
         <li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
         <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
         </ul>
     </li>{% endif %}
 
-    <li>
-        <h3>Подписки</h3>
-        <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
-    </li>
-
-    <li>
-        <h3>Разделы</h3>
-{% category_menu %}
-    </li>
-
-    <li>
-        <h3>Интересное</h3>
-{% latest_menu 5 "featured" %}
-    </li>
-
-    <li id="blog-archive"><h3>Архив</h3>
-{% archive_tree %}
-    </li>
 
 </ul><!-- /blog-sidemenu -->
 {% endblock %}
