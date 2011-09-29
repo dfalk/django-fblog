@@ -2,7 +2,7 @@
 
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
 
-{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{{ entry.category.get_absolute_url }}">{{ entry.category }}</a> / <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - <a href="{{ entry.get_absolute_url }}">Заметка</a> - Редактирование{% endblock %}
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - <a href="{{ entry.get_absolute_url }}">Заметка</a> - Редактирование{% endblock %}
 
 {% block contentclass %}blog-editor{% endblock %}
 {% block content %}
