@@ -1,0 +1,6 @@
+.collapsed {
+    display: none;
+}
+.expanded {
+    display: inline;
+}

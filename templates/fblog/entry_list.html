@@ -11,8 +11,7 @@
     {% for entry in object_list %}<li>
         <h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
 
-        <div class="entry-header">{{ entry.publish|date:"j M Y H:m" }} | 
-        раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a></div>
+        <div class="entry-header">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a></div>
 
         <div class="entry-preview">{{ entry.preview_or_content|render_inlines|markdown }}</div>
 
