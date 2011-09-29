@@ -1,6 +1,7 @@
-FBLOG - django app
+FBLOG django application.
 
 Basic blog on my own needs.
+Making some framework experience.
 
-Main feature:
+Interesting features:
 * archive tree like blogspot
