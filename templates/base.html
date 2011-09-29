@@ -7,22 +7,21 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" />
-
 <meta name="description" content="{% block description %}{% endblock %}"/>
 <meta name="keywords" content="{% block keywords %}{% endblock %}" />
 
-{% block extrahead %}{% endblock %}
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/base.css" />
+{% endblock %}
 
 </head>
-
 <body>
 
 <div id="header">
-{% block header %}Site title{% endblock %}
+{% block header %}Интересный сайт{% endblock %}
 </div><!-- /#header -->
 
-<div id="personal" class="infobar rounded" >
+<div id="navline" class="infobar rounded" >
     <div id="profile">
         <a href="{% url blog_index %}">Дневник</a>
         {% if not user.is_authenticated %}<a href="{% url auth_login %}?next={{ request.path }}">Войти</a>{% endif %}
@@ -46,7 +45,7 @@
 
 {% endblock %}
 <div class="clearfix"></div>
-</div><!-- /#main -->
+</div><!-- /#main div -->
 
 <div id="footer" class="infobar rounded">
 {% block footer %}Site copyright{% endblock %}

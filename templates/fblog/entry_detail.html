@@ -7,6 +7,7 @@
 
 {% block contentclass %}blog-entry{% endblock %}
 {% block content %}
+
 <script type="text/javascript">
 $(document).ready(function(){
     $('#publish').click(function(){
@@ -45,13 +46,14 @@ $(document).ready(function(){
 
 <h1>{{ entry.title }}</h1>
 
-<div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>
+<div id="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>
 
-<div class="entry-content">{{ entry.content|markdown }}</div>
+<div id="entry-content">{{ entry.content|markdown }}
+</div><!-- /entry-content -->
 
 {% if entry.related_entries.published %}
-<div class="related-entries">
-<h2 id="related">Заметки по теме</h2>
+<div id="related-entries">
+<h3 id="related">Заметки по теме</h3>
 
 <ul>
 {% for item in entry.related_entries.published %}
@@ -61,17 +63,17 @@ $(document).ready(function(){
 </div><!-- /related-entries -->
 {% endif %}
 
-<div class="entry-comments">
-<h2 id="comments">Комментарии</h2>{% get_comment_list for entry as allcomments %}
+<div id="entry-comments">
+<h3 id="comments">Комментарии</h3>{% get_comment_list for entry as allcomments %}
 
-<div class="comments-list">  
+<div id="comments-list">  
 {% for comment in allcomments %}
     <p><b>{{ comment.user_name }}</b>, {{ comment.submit_date }}:
     <br>{{ comment.comment }}</p>
 {% endfor %}
 </div>
 
-<div class="comment-form">
+<div id="comment-form">
 {% if entry.enable_comments %}
 <h3>{% if allcomments|length = 0 %}Напишите первый ответ{% else %}Ваш комментарий{% endif %}, {{ request.user }}:</h3>
 {% if user.is_authenticated %}
