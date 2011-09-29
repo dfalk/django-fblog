@@ -1,7 +1,28 @@
-FBLOG django application.
+Django blog application.
 
-Basic blog on my own needs.
-Making some framework experience.
+    Basic blog on my own needs.
+    Making some framework experience.
+
 
 Interesting features:
-* archive tree like blogspot
+
+    * archive tree like blogspot
+
+
+Requirements:
+
+    # django core required
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.contenttypes',
+
+    # blog required
+    'django.contrib.sitemaps',
+    'django.contrib.syndication',
+    'django.contrib.comments',
+    'django.contrib.markup',
+    'staticfiles',
+    'registration',
