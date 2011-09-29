@@ -6,39 +6,42 @@
 
 {% block extrahead %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/collapsible.css" />
 {% endblock %}
 
 {% block breadcrumbs %} - Дневник{% endblock %}
 
 {% block sidebar %}
 <!--<h2>Меню блога</h2>-->
-
 <ul id="blog-sidemenu">
 
-{% if user.is_staff %}<li><h3>Администрирование</h3>
-<ul>
-<li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
-<li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
-</ul>
-</li>{% endif %}
+    {% if user.is_staff %}<li>
+        <h3>Администрирование</h3>
+        <ul>
+        <li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
+        <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
+        </ul>
+    </li>{% endif %}
 
-<li><h3>Подписки</h3>
-<ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
-</li>
+    <li>
+        <h3>Подписки</h3>
+        <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
+    </li>
 
-<li><h3>Разделы</h3>
+    <li>
+        <h3>Разделы</h3>
 {% category_menu %}
-</li>
+    </li>
 
-<li><h3>Интересное</h3>
+    <li>
+        <h3>Интересное</h3>
 {% latest_menu 5 "featured" %}
-</li>
+    </li>
 
-<li id="blog-archive"><h3>Архив</h3>
+    <li id="blog-archive"><h3>Архив</h3>
 {% archive_tree %}
-</li>
+    </li>
 
-</ul>
-
+</ul><!-- /blog-sidemenu -->
 {% endblock %}
 

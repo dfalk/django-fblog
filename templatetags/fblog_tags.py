@@ -6,8 +6,14 @@ from django.template import Library, Node
 from django.template import TemplateSyntaxError
 from django.contrib.sites.models import Site
 from fblog.models import Entry, EntryCategory
+from django.utils.translation import ugettext as _
+import calendar
 
 register = Library()
+
+@register.filter
+def month_name(month_number):
+    return _(calendar.month_name[int(month_number)])
 
 @register.inclusion_tag('fblog/category_menu.html')
 def category_menu():

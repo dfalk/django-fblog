@@ -7,28 +7,25 @@
 
 {% block content %}
 <!--<h1>Дневник</h1>-->
-
 <ul class="blog-entries">
-{% for entry in object_list %}
-<li>
-<h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
-<div class="entry-header">{{ entry.publish|date:"j M Y H:m" }} | 
-раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a></div>
+    {% for entry in object_list %}<li>
+        <h2><a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h2>
 
-<div class="entry-preview">{{ entry.preview_or_content|render_inlines|markdown }}</div>
+        <div class="entry-header">{{ entry.publish|date:"j M Y H:m" }} | 
+        раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a></div>
 
-<div class="entry-footer">
-{% if entry.preview %}<a class="entry-more" href="{{ entry.get_absolute_url }}">читать дальше</a> | {% endif %}
-<a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a></div>
-</li>
-{% endfor %}
-</ul>
+        <div class="entry-preview">{{ entry.preview_or_content|render_inlines|markdown }}</div>
 
-{% if is_paginated %}
-<div class="pagination">Страницы:
-{% if has_previous %}<a class="page-previous" href="?page={{ previous }}">позже</a>{% endif %}
-<span class="page-position">{{ page }}/{{ pages }}</span>
-{% if has_next %}<a class="page-next" href="?page={{ next }}">раньше</a>{% endif %}
-</div>
-{% endif %}
+        <div class="entry-footer">
+        {% if entry.preview %}<a class="entry-more" href="{{ entry.get_absolute_url }}">читать дальше</a> | {% endif %}
+        <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a></div>
+    </li>
+    {% endfor %}
+</ul><!-- /blog-entries -->
+
+{% if is_paginated %}<div class="pagination">Страницы:
+    {% if has_previous %}<a class="page-previous" href="?page={{ previous }}">позже</a>{% endif %}
+    <span class="page-position">{{ page }}/{{ pages }}</span>
+    {% if has_next %}<a class="page-next" href="?page={{ next }}">раньше</a>{% endif %}
+</div>{% endif %}
 {% endblock %}

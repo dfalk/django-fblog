@@ -11,9 +11,9 @@ $(document).ready(function(){
 });
 </script>
 
-<ul>{% regroup entry_list by publish|date:"Y" as years_list %}
-    {% for year in years_list %}<li><b><a class="year" href="{% url blog_archive_year year.grouper %}">{{ year.grouper }}</a></b> ({{ year.list|length }})<ul class="listmonthes">{% regroup year.list by publish|date:"m" as item_list %}
-        {% for item in item_list %}<li><b><a class="month" href="{% url blog_archive_month year.grouper item.grouper %}">{{ item.grouper }}</a></b> ({{ item.list|length }})<ul class="listentries">
+<ul>{% load fblog_tags %}{% regroup entry_list by publish|date:"Y" as years_list %}
+    {% for year in years_list %}<li><b><a class="year" href="{% url blog_archive_year year.grouper %}">{{ year.grouper }}</a></b> ({{ year.list|length }})<ul class="listmonthes collapsed">{% regroup year.list by publish|date:"m" as item_list %}
+        {% for item in item_list %}<li><b><a class="month" href="{% url blog_archive_month year.grouper item.grouper %}">{{ item.grouper|month_name }}</a></b> ({{ item.list|length }})<ul class="listentries collapsed">
             {% for entry in item.list %}<li><a class="entry" href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></li>
             {% endfor %}
         </ul></li>
