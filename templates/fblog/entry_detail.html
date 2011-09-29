@@ -1,5 +1,5 @@
 {% extends "fblog/base_blog.html" %}
-{% load comments inlines markup %}
+{% load comments markup %}
 
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
 
@@ -47,7 +47,7 @@ $(document).ready(function(){
 
 <div class="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>
 
-<div class="entry-content">{{ entry.content|render_inlines|markdown }}</div>
+<div class="entry-content">{{ entry.content|markdown }}</div>
 
 {% if entry.related_entries.published %}
 <div class="related-entries">
