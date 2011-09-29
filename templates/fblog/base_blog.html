@@ -23,10 +23,6 @@
         </ul>
     </li>{% endif %}
 
-    <li id="blog-feed"><h3>Подписка</h3>
-        <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
-    </li>
-
     <li id="blog-featured"><h3>Интересное</h3>
 {% latest_menu 5 "featured" %}
     </li>
@@ -37,6 +33,10 @@
 
     <li id="blog-categories"><h3>Разделы</h3>
 {% category_menu %}
+    </li>
+
+    <li id="blog-feed"><h3>Подписка</h3>
+        <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
     </li>
 
 </ul><!-- /blog-sidemenu -->
