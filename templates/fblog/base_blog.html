@@ -5,6 +5,7 @@
 {% block title %}Blog title{% endblock %}
 
 {% block extrahead %}
+{{ block.super }}
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/collapsible.css" />
 {% endblock %}
@@ -15,11 +16,18 @@
 <!--<h2>Меню блога</h2>-->
 <ul id="blog-sidemenu">
 
-    <li><h3>Подписка</h3>
+    {% if user.is_staff %}<li id="blog-admin"><h3>Администрирование</h3>
+        <ul>
+        <li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
+        <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
+        </ul>
+    </li>{% endif %}
+
+    <li id="blog-feed"><h3>Подписка</h3>
         <ul><li><a href="{% url blog_rss %}">RSS лента</a></li></ul>
     </li>
 
-    <li><h3>Интересное</h3>
+    <li id="blog-featured"><h3>Интересное</h3>
 {% latest_menu 5 "featured" %}
     </li>
 
@@ -27,17 +35,9 @@
 {% if entry %}{% archive_tree entry %}{% else %}{% archive_tree %}{% endif %}
     </li>
 
-    <li><h3>Разделы</h3>
+    <li id="blog-categories"><h3>Разделы</h3>
 {% category_menu %}
     </li>
-
-    {% if user.is_staff %}<li><h3>Администрирование</h3>
-        <ul>
-        <li><a href="{% url blog_entry_new %}">Написать заметку</a></li>
-        <li><a href="{% url blog_publishing %}">Показать неопубликованное</a></li>
-        </ul>
-    </li>{% endif %}
-
 
 </ul><!-- /blog-sidemenu -->
 {% endblock %}
