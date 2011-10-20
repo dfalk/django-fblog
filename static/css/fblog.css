@@ -1,0 +1,48 @@
+/* ============================ BLOG =========================== */
+
+#blog-entries {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#blog-entries li {
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+#related-entries ul {
+    list-style-type: disc;
+    margin-top: 0px;
+    margin-bottom: 6px;
+    padding-left: 15px;
+}
+
+.entry-cut {
+    margin-bottom: -8px;
+}
+
+#blog-entries li .entry-cut h2 {
+    font-size: 140%;
+}
+
+#entry-content, #comment-form {
+    margin-top: 10px;
+}
+
+#related-entries, #entry-comments {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid #aaa;
+}
+
+.collapsed {
+    display: none;
+}
+.expanded {
+    display: block;
+}
+
+.fieldWrapper {
+    margin-bottom: 10px;
+}
