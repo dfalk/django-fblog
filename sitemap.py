@@ -12,4 +12,4 @@ class BlogSitemap(Sitemap):
         return Entry.objects.published()
 
     def lastmod(self, obj):
-        return obj.publish
+        return obj.date_publish

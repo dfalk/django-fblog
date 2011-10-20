@@ -18,17 +18,25 @@
 <body>
 
 <div id="header">
-{% block header %}Интересный сайт{% endblock %}
+{% block header %}
+<div id="sitetitle">Интересный сайт</div>
+<div id="sitemenu">
+    <a href="/">О нас</a>
+    <a href="/blog/">Дневник</a>
+    <a href="/price/">Цены</a>
+</div>
+{% endblock %}
 </div><!-- /#header -->
 
 <div id="navline" class="infobar rounded" >
     <div id="profile">
-        <a href="{% url blog_index %}">Дневник</a>
+        <a href="/blog/">Дневник</a>
+        <a href="/price/">Цены</a>
         {% if not user.is_authenticated %}<a href="{% url auth_login %}?next={{ request.path }}">Войти</a>{% endif %}
         {% if user.is_staff %}<a href="{% url admin:index %}">Админка</a>{% endif %}
         {% if user.is_authenticated %}<a href="{% url auth_logout %}?next={{ request.path }}">Выход</a> ({{ user.username }}){% endif %}
     </div>
-    <div id="breadcrumbs"><a href="/">Главная</a>{% block breadcrumbs %}{% endblock %}</div>
+    <div id="breadcrumbs"><a href="/">Главная</a>{% block breadcrumbs %} - Добро пожаловать!{% endblock %}</div>
     <div class="clearfix"></div>
 </div><!-- /#infobar personal -->
 

@@ -3,7 +3,7 @@
 
 {% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
 
-{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - Заметка{% endblock %}
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{% url blog_archive_year entry.date_publish.year %}">{{ entry.date_publish.year }}</a> - <a href="{% url blog_archive_month entry.date_publish.year entry.date_publish|date:"m" %}">{{ entry.date_publish|date:"F" }}</a> - Заметка{% endblock %}
 
 {% block contentclass %}blog-entry{% endblock %}
 {% block content %}
@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 <h1>{{ entry.title }}</h1>
 
-<div id="entry-meta">{{ entry.publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>
+<div id="entry-meta">{{ entry.date_publish|date:"j M Y H:m" }} | раздел: <a href="{{ entry.category.get_absolute_url }}">{{ entry.category|lower }}</a> | <a href="{{ entry.get_absolute_url }}#comments">ответов: {% get_comment_count for entry as comment_count %}{{ comment_count }}</a>{% if user.is_staff %} | <a href="{{ entry.get_absolute_url }}edit/">редактирование</a> | <a id="publish" href="{{ entry.get_absolute_url }}publish/" {% if entry.is_published %}style="display: none;"{% endif %}>опубликовать</a><a id="hide" href="{{ entry.get_absolute_url }}hide/" {% if not entry.is_published %}style="display:none"{% endif %}>скрыть</a>{% endif %}</div>
 
 <div id="entry-content">{{ entry.content|markdown }}
 </div><!-- /entry-content -->

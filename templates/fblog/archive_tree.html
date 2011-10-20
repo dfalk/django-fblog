@@ -1,24 +1,13 @@
-<script type="text/javascript">
-$(document).ready(function(){
-    $('.year').click(function(){
-        $(this).next().toggle();
-        return false;
-    });
-    $('.month').click(function(){
-        $(this).next().toggle();
-        return false;
-    });
-});
-</script>
-<ul>{% load fblog_tags %}{% regroup entry_list by publish|date:"Y" as years_list %}
+<div id="blog-archive-tree">
+<ul>{% load fblog_tags %}{% regroup entry_list by date_publish|date:"Y" as years_list %}
     {% for year in years_list %}
     <li><a class="year" href="{% url blog_archive_year year.grouper %}">
         {{ year.grouper }}</a> ({{ year.list|length }})
-        <ul class="listmonthes{% if not current_entry and forloop.first or current_entry.publish|date:"Y" == year.grouper %} expanded{% else %} collapsed{% endif %}">{% regroup year.list by publish|date:"m" as monthes_list %}
+        <ul class="listmonthes{% if not current_entry and forloop.first or current_entry.date_publish|date:"Y" == year.grouper %} expanded{% else %} collapsed{% endif %}">{% regroup year.list by date_publish|date:"m" as monthes_list %}
             {% for month in monthes_list %}
             <li><a class="month" href="{% url blog_archive_month year.grouper month.grouper %}">
                 {{ month.grouper|month_name }}</a> ({{ month.list|length }})
-                <ul class="listentries{% if not current_entry and forloop.first and forloop.parentloop.first or current_entry.publish|date:"m" == month.grouper %} expanded{% else %} collapsed{% endif %}">
+                <ul class="listentries{% if not current_entry and forloop.first and forloop.parentloop.first or current_entry.date_publish|date:"m" == month.grouper %} expanded{% else %} collapsed{% endif %}">
                     {% for entry in month.list %}
                     <li><a class="entry" href="{{ entry.get_absolute_url }}">
                         {{ entry.title }}
@@ -31,4 +20,16 @@ $(document).ready(function(){
         </li>
     {% endfor %}
 </ul>
-
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.year').click(function(){
+        $(this).next().toggle();
+        return false;
+    });
+    $('.month').click(function(){
+        $(this).next().toggle();
+        return false;
+    });
+});
+</script>
+</div><!-- /#blog-archive-tree -->

@@ -21,12 +21,12 @@ def entry_list(request, page=0, template_name='fblog/entry_list.html', **kwargs)
         **kwargs)
 
 def entry_detail(request, year, month, day, slug, **kwargs):
-    entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
+    entry = Entry.objects.get(date_publish__year=year, date_publish__month=month, date_publish__day=day, slug=slug)
     return direct_to_template(request,'fblog/entry_detail.html', {'entry': entry})
 
 @permission_required('fblog.change_entry')
 def entry_publish(request, year, month, day, slug, **kwargs):
-    entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
+    entry = Entry.objects.get(date_publish__year=year, date_publish__month=month, date_publish__day=day, slug=slug)
     entry.is_published = True
     entry.save()
     if request.is_ajax():
@@ -37,7 +37,7 @@ def entry_publish(request, year, month, day, slug, **kwargs):
 
 @permission_required('fblog.change_entry')
 def entry_hide(request, year, month, day, slug, **kwargs):
-    entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
+    entry = Entry.objects.get(date_publish__year=year, date_publish__month=month, date_publish__day=day, slug=slug)
     entry.is_published = False
     entry.save()
     if request.is_ajax():
@@ -68,11 +68,11 @@ def entry_new(request, **kwargs):
     else:
         form = EntryAdminForm()
 
-    return direct_to_template(request, 'fblog/entry_new.html',{'form':form})
+    return direct_to_template(request, 'fblog/entry_edit.html',{'form':form})
 
 @permission_required('fblog.change_entry')
 def entry_edit(request, year, month, day, slug, **kwargs):
-    entry = Entry.objects.get(publish__year=year, publish__month=month, publish__day=day, slug=slug)
+    entry = Entry.objects.get(date_publish__year=year, date_publish__month=month, date_publish__day=day, slug=slug)
     if request.method == 'POST':
         form = EntryAdminForm(request.POST, instance=entry)
         if form.is_valid():
@@ -83,15 +83,21 @@ def entry_edit(request, year, month, day, slug, **kwargs):
 
     return direct_to_template(request, 'fblog/entry_edit.html',{'form':form,'entry':entry})
 
-def category_detail(request, slug, **kwargs):
-    category_list = Entry.objects.filter(category__slug__exact=slug)
+def category_detail(request, slug, page=0, template_name='fblog/category_detail.html', **kwargs):
     category = EntryCategory.objects.get(slug=slug)
-    return direct_to_template(request,'fblog/category_detail.html', {'object_list': category_list, 'category': category })
+    return list_detail.object_list(
+        request,
+        queryset = Entry.objects.published().filter(category__slug__exact=slug),
+        paginate_by = 10,
+        page = page,
+        template_name = template_name,
+        extra_context = {'category':category},
+        **kwargs)
 
 def entry_archive_year(request, year, page=0, template_name='fblog/entry_archive_year.html', **kwargs):
     return list_detail.object_list(
         request,
-        queryset = Entry.objects.published().filter(publish__year=year),
+        queryset = Entry.objects.published().filter(date_publish__year=year),
         paginate_by = 10,
         page = page,
         template_name = template_name,
@@ -101,7 +107,7 @@ def entry_archive_year(request, year, page=0, template_name='fblog/entry_archive
 def entry_archive_month(request, year, month, page=0, template_name='fblog/entry_archive_month.html', **kwargs):
     return list_detail.object_list(
         request,
-        queryset = Entry.objects.published().filter(publish__year=year, publish__month=month),
+        queryset = Entry.objects.published().filter(date_publish__year=year, date_publish__month=month),
         paginate_by = 10,
         page = page,
         template_name = template_name,
@@ -111,7 +117,7 @@ def entry_archive_month(request, year, month, page=0, template_name='fblog/entry
 def entry_archive_day(request, year, month, day, page=0, template_name='fblog/entry_archive_day.html', **kwargs):
     return list_detail.object_list(
         request,
-        queryset = Entry.objects.published().filter(publish__year=year, publish__month=month, publish__day=day),
+        queryset = Entry.objects.published().filter(date_publish__year=year, date_publish__month=month, date_publish__day=day),
         paginate_by = 10,
         page = page,
         template_name = template_name,

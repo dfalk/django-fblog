@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import url, patterns
 from fblog.feeds import BlogFeed
 
 urlpatterns = patterns('fblog.views',

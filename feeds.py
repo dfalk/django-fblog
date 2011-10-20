@@ -20,5 +20,5 @@ class BlogFeed(Feed):
         return Entry.objects.published()[:10]
 
     def item_pubdate(self, item):
-        return item.publish
+        return item.date_publish
 

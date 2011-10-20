@@ -26,31 +26,27 @@ class Entry(models.Model):
     category = models.ForeignKey(EntryCategory, blank=True, null=True)
 
     title = models.CharField(max_length=100)
-    slug = models.SlugField(unique_for_date="publish", max_length=100)
-    content = models.TextField()
-    preview = models.TextField(blank=True)
+    slug = models.SlugField(unique_for_date="date_publish", max_length=100)
+    content = models.TextField(help_text="Use <!-- cut --> for split text in list view.")
 
-    related_entries = models.ManyToManyField('self', blank=True, null=True)
     is_published = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    publish = models.DateTimeField(default=datetime.now)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+    date_publish = models.DateTimeField(default=datetime.now)
+    related_entries = models.ManyToManyField('self', blank=True, null=True)
     enable_comments = models.BooleanField(default=True)
 
     objects = PublicManager()
 
     class Meta:
-        ordering = ['-publish']
-        get_latest_by = 'publish'
+        ordering = ['-date_publish']
+        get_latest_by = 'date_publish'
 
     def __unicode__(self):
         return u"%s" % (self.title)
 
-    def preview_or_content(self):
-        return self.preview or self.content
-
     @models.permalink
     def get_absolute_url(self):
-        return ('fblog.views.entry_detail', [self.publish.year, self.publish.strftime("%m"), self.publish.strftime("%d"), self.slug])
+        return ('fblog.views.entry_detail', [self.date_publish.year, self.date_publish.strftime("%m"), self.date_publish.strftime("%d"), self.slug])
 

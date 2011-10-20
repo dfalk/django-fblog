@@ -11,6 +11,18 @@ import calendar
 
 register = Library()
 
+@register.filter()
+def cut(text):
+    """
+    Cut text
+    @return text before <!-- cut --> tag
+    >>> cut("desctiption<!-- cut -->text")
+    'desctiption'
+    >>> cut("description text")
+    'description text'
+    """
+    return text.split('<!-- cut -->')[0]
+
 @register.filter
 def month_name(month_number):
     return _(calendar.month_name[int(month_number)])

@@ -1,16 +1,64 @@
 {% extends "fblog/base_blog.html" %}
 
-{% block title %}{{ entry.title }} | {{ block.super }}{% endblock %}
+{% block title %}{% if entry %}{{ entry.title }}{% else %}Новая заметка{% endif %} | {{ block.super }}{% endblock %}
 
-{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - <a href="{% url blog_archive_year entry.publish.year %}">{{ entry.publish.year }}</a> - <a href="{% url blog_archive_month entry.publish.year entry.publish|date:"m" %}">{{ entry.publish|date:"F" }}</a> - <a href="{{ entry.get_absolute_url }}">Заметка</a> - Редактирование{% endblock %}
+{% block breadcrumbs %} - <a href="{% url blog_index %}">Дневник</a> - {% if entry %}<a href="{% url blog_archive_year entry.date_publish.year %}">{{ entry.date_publish.year }}</a> - <a href="{% url blog_archive_month entry.date_publish.year entry.date_publish|date:"m" %}">{{ entry.date_publish|date:"F" }}</a> - <a href="{{ entry.get_absolute_url }}">Заметка</a> - Редактирование{% else %}Новая заметка{% endif %}{% endblock %}
 
 {% block contentclass %}blog-editor{% endblock %}
 {% block content %}
-<h1>{{ entry.title }}</h1>
+<h1>{% if entry %}{{ entry.title }}{% else %}Новая заметка{% endif %}</h1>
 
 <form action="" method="post">{% csrf_token %}
-{{ form.as_p }}
-<input type="submit" value="Submit" />
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper">
+        {{ form.category.errors }}
+        <label for="id_category">{{ form.category.label }}: </label><br />
+        {{ form.category }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.title.errors }}
+        <label for="id_title">{{ form.title.label }}: </label><br />
+        {{ form.title }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.slug.errors }}
+        <label for="id_slug">{{ form.slug.label }}: </label><br />
+        {{ form.slug }}
+    </div>
+    <div class="fieldWrapper">
+        {{ form.content.errors }}
+        <label for="id_content">{{ form.content.label }}: </label><br />
+        {{ form.content }}
+        {{ form.content.help_text }}
+    </div>
+
+    <div class="fieldWrapper">
+        {{ form.related_entries.errors }}
+        <label for="id_related_entries">{{ form.related_entries.label }}: </label><br />
+        {{ form.related_entries }}
+    </div>
+
+    <div class="fieldWrapper">
+        {{ form.enable_comments.errors }}
+        {{ form.enable_comments }} <label for="id_enable_comments">{{ form.enable_comments.label }}</label> 
+    </div>
+
+    <div class="fieldWrapper">
+        {{ form.is_featured.errors }}
+        {{ form.is_featured }} <label for="id_is_featured">{{ form.is_featured.label }}</label> 
+    </div>
+
+    <div class="fieldWrapper">
+        {{ form.date_publish.errors }}
+        <label for="id_date_publish">{{ form.date_publish.label }}: </label><br />
+        {{ form.date_publish }}
+    </div>
+
+    <div class="fieldWrapper">
+        {{ form.is_published.errors }}
+        {{ form.is_published }} <label for="id_is_featured">{{ form.is_published.label }}</label> 
+    </div>
+<input type="submit" value="Save" />
 </form>
 
 </div>
