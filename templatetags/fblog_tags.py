@@ -7,7 +7,7 @@ from django.template import TemplateSyntaxError
 from django.contrib.sites.models import Site
 from fblog.models import Entry, EntryCategory
 from django.utils.translation import ugettext as _
-import calendar
+from django.utils.dates import MONTHS
 
 register = Library()
 
@@ -25,7 +25,7 @@ def cut(text):
 
 @register.filter
 def month_name(month_number):
-    return _(calendar.month_name[int(month_number)])
+    return MONTHS[int(month_number)]
 
 @register.inclusion_tag('fblog/category_menu.html')
 def category_menu():
